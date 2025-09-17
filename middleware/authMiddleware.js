@@ -25,3 +25,19 @@ export const protect = asyncHandler(async (req, res, next) => {
         throw new Error("Not authorized, no token");
     }
 });
+
+// role-based authorization middleware
+
+export const authorize = (...roles) => {
+    return (req, res, next) => {
+        if (!req.user) {
+            res.status(401);
+            throw new Error("Not authenticated");
+        }
+        if (!roles.includes(req.user.role)) {
+            res.status(403);
+            throw new Error("Forbiddenm: insufficient role");
+        }
+        next();
+    };
+};
