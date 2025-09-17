@@ -31,3 +31,10 @@ export const createTask = asyncHandler(async (req, res) => {
     const task = await Task.create(taskData);
     res.status(201).json(task);
 })
+
+// get all tasks(admin)
+
+export const getAllTasks = asyncHandler(async (req, res) => {
+    const tasks = await Task.find().populate("assignedTo", "name email role");
+    res.json(tasks);
+});
