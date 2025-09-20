@@ -11,3 +11,29 @@ export const getAllMembers = asyncHandler(async (req, res) => {
         members: users,
     });
 });
+
+
+export const deleteMember = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    if (req.user.id === id) {
+        res.status(400);
+        throw new Error("You cannot delete yourself");
+    }
+
+    const user = await User.findById(id);
+    if (!user) {
+        res.status(404);
+        throw new Error("Member not found");
+    }
+
+    // Delete tasks if assigned, else skip
+    // const deletedTasks = await Task.deleteMany({ assignedTo: id });
+
+    await user.deleteOne();
+
+    res.status(200).json({
+        message: "Member deleted successfully"
+        // , tasksDeleted: deletedTasks.deletedCount || 0
+    });
+});

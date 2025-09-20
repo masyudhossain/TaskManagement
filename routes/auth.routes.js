@@ -6,7 +6,7 @@ import { protect, authorize } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/register", protect, authorize("admin"), registerUser);
-router.post("/login", authUser)
+router.post("/register", protect, authorize("admin"), registerUser); // done
+router.post("/login", authUser) // done
 
 export default router;

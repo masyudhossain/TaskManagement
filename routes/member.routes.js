@@ -13,8 +13,8 @@ const router = express.Router();
 
 router.use(protect, authorize("member"));
 
-router.get("/tasks", getMyTasks);
-router.get("/taskById/:id", getMyTaskById);
+router.get("/mytasks", getMyTasks); //done
+router.get("/taskById/:id", getMyTaskById); // done
 router.put("/updateTask/:id", updateMyTask);
 
 export default router;

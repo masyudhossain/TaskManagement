@@ -141,6 +141,14 @@ export const updateMyTask = asyncHandler(async (req, res) => {
     // Only allow updating status and description
 
     const allowedFields = ["status", "description"];
+    const invalidFields = Object.keys(req.body)
+        .filter(field => !allowedFields.includes(field));
+
+    if (invalidFields.length > 0) {
+        res.status(403);
+        throw new Error(`You are not allowed to update: ${invalidFields.join(", ")}`);
+    }
+
     allowedFields.forEach(field => {
         if (req.body[field] !== undefined) {
             task[field] = req.body[field];
