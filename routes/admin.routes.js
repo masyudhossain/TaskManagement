@@ -2,7 +2,7 @@
 
 import express from "express";
 
-import { createTask, getAllTasks, getTaskById, updateTask } from "../controllers/task.controller.js";
+import { createTask, getAllTasks, getTaskById, updateTask, deleteTask, getTasksByEmail } from "../controllers/task.controller.js";
 
 import { protect, authorize } from "../middleware/authMiddleware.js";
 
@@ -14,5 +14,7 @@ router.post("/createtask", createTask);
 router.get("/getAllTask", getAllTasks);
 router.get("/getTaskById/:id", getTaskById);
 router.put("/updateTask/:id", updateTask);
+router.delete("/deleteTaskById/:id", deleteTask);
+router.get("/getTaskByEmail/:email", getTasksByEmail);
 
 export default router;
