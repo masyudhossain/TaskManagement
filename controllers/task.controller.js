@@ -10,17 +10,17 @@ import User from "../models/user.model.js";
 // create task and assign to member -> POST
 
 export const createTask = asyncHandler(async (req, res) => {
-    const { title, description, status, priority, assignToEmail } = req.body;
+    const { title, description, status, priority, assignedToEmail } = req.body;
 
     const taskData = {
         title,
         description,
         status,
-        priority,
+        priority
     };
 
-    if (assignToEmail) {
-        const member = await User.findOne({ email: assignToEmail });
+    if (assignedToEmail) {
+        const member = await User.findOne({ email: assignedToEmail });
         if (!member) {
             res.status(404);
             throw new Error("Assigned member not found");
@@ -30,10 +30,10 @@ export const createTask = asyncHandler(async (req, res) => {
 
     const task = await Task.create(taskData);
 
-    // task = await task.populate("assignedTo", "name email role");
+    await task.populate("assignedTo", "name email role");
 
     res.status(201).json(task);
-})
+});
 
 // get all tasks(admin) -> GET
 
